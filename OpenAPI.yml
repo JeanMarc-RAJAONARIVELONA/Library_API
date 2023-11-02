@@ -1,0 +1,57 @@
+openapi: "3.0.2"
+info:
+  title: Library API
+  version: "1.0.0"
+servers:
+  - url: https://Library.com
+paths:
+  /books:
+    get:
+      summary: Get all books
+      tags:
+        - Book
+      description: the returned book are order by name
+      operationId: getBooks
+      parameters:
+        - in: query
+          name: bookName
+          description: filter returned book
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: The list of filtred books
+          content:
+            application/json:
+              schema:
+                type: array
+                $ref: "#/components/schemas/Book"
+    put:
+      summary: Create or update a list of books
+      operationId: crupdateBooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Book"
+      responses:
+        200:
+          description: The list of created or updated books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Book"
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        id:
+          type: string
+        bookName:
+          type: string
